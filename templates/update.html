@@ -1,0 +1,30 @@
+<html lang="en">
+<head>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{.Title}}</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+    
+</head>
+<body>
+    <h1>Update Form</h1>
+    <div class="container-button">
+        <form method="POST">
+            <div class = "container">
+                <label for="username"> Username : </label>
+                <input type="text" placeholder="Enter Username" name="username" id="username" required>
+                <label for="first_name">First Name : </label>
+                <input type="text" placeholder="Enter First Name" name="first_name" id="first_name" required>
+                <label for="last_name">Last Name : </label>
+                <input type="text" placeholder="Enter Last Name" name="last_name" id="last_name" required>
+                <button type="submit">Update</button>
+            </div>
+    
+        </form>
+    </div>
+
+    <div class="container-button">
+        <a href="/dashboard/"><button>Back</button></a>
+    </div>
+</body>
+</html>

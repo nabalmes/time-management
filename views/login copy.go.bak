@@ -1,0 +1,67 @@
+package views
+
+import (
+	"fmt"
+	"log"
+	"net/http"
+	"text/template"
+	"time"
+
+	"github.com/jmcerezo/time_management/models"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
+)
+
+func LogInHander(w http.ResponseWriter, r *http.Request) {
+	data := map[string]interface{}{}
+
+	// details := models.Users{}
+	// details.Username = r.FormValue("username")
+	// details.Password = r.FormValue("password")
+	// fmt.Println("Username", details.Username)
+	// fmt.Println("Password", details.Password)
+	database_connection := "root:Allen is Great 200%@tcp(localhost:3306)/time?charset=utf8mb4&parseTime=True&loc=Local"
+	db, err := gorm.Open(mysql.Open(database_connection), &gorm.Config{})
+	// fmt.Println("gege", db)
+	newData := make(map[string]string)
+	// db.Debug().Where("username = ? and password = ?", details.Username, details.Password).First(&newData)
+	fmt.Println("NEWDATA", &newData)
+	if err != nil {
+		fmt.Println("Faied to Connect to the Database ", err)
+	}
+	details := models.Users{}
+	details.Username = r.FormValue("username")
+	details.Password = r.FormValue("password")
+	fmt.Println("Username", details.Username)
+	fmt.Println("Password", details.Password)
+	var modelusers []models.Users
+	rows := db.Where("username = ? and password = ?", details.Username, details.Password).Find(&modelusers)
+	// fmt.Println("rows", rows.RowsAffected)
+	if rows.RowsAffected > 0 {
+		if err != nil {
+			log.Print(err)
+		} else if r.Method == "POST" {
+			fmt.Printf("Username and Password Okay!\n")
+			_ = db.Exec("USE time;")
+			_ = db.Exec("UPDATE users SET time_in = ? WHERE username = ?", time.Now(), details.Username)
+
+			expires := time.Now().AddDate(1, 0, 0)
+			ck := http.Cookie{
+				Name:    "Username",
+				Path:    "/",
+				Expires: expires,
+			}
+			ck.Value = details.Username
+			http.SetCookie(w, &ck)
+			fmt.Println("HERE AFTER COOKIE")
+			DashboardHandler(w, r)
+			fmt.Println("Before REDIRECT")
+			http.Redirect(w, r, "/dashboard/", http.StatusSeeOther)
+		}
+	}
+
+	data["Title"] = "Login | Time Management"
+
+	tmpl := template.Must(template.ParseFiles("./templates/login.html"))
+	tmpl.Execute(w, data)
+}

@@ -1,0 +1,46 @@
+package views
+
+import (
+	"fmt"
+	"net/http"
+	"text/template"
+	"time"
+
+	"github.com/jmcerezo/time_management/models"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
+)
+
+func DashboardHandler(w http.ResponseWriter, r *http.Request) {
+	tmpl := template.Must(template.ParseFiles("./templates/dashboard.html"))
+	data := map[string]interface{}{}
+	database_connection := "root:Allen is Great 200%@tcp(localhost:3306)/time_management?charset=utf8mb4&parseTime=True&loc=Local"
+	db, err := gorm.Open(mysql.Open(database_connection), &gorm.Config{})
+	if err != nil {
+		panic("Failed to Connect to the Database")
+	}
+	users := []models.Users{}
+	db.Find(&users)
+	data["Users"] = users
+	fmt.Println("gege ", users)
+
+	// details := models.Users{}
+	// details.Username = r.FormValue("username")
+
+	cookie, _ := r.Cookie("username")
+	fmt.Print("COOKIE", cookie.Value)
+	if r.Method == "POST" {
+		_ = db.Exec("USE time_management;")
+		_ = db.Exec("UPDATE users SET time_out = ? WHERE username = ?", time.Now(), cookie.Value)
+
+		ck := http.Cookie{
+			Name:    "Username",
+			Path:    "/",
+			Expires: time.Now(),
+		}
+		http.SetCookie(w, &ck)
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+	}
+
+	tmpl.Execute(w, data)
+}

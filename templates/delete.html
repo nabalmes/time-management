@@ -1,0 +1,27 @@
+<html lang="en">
+<head>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{.Title}}</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+    
+</head>
+<body>
+    <h1>Delete Form</h1>
+    <div class="container-button">
+        <form method="POST">
+            <div class = "container">
+                <label for="username"> Username : </label>
+                <input type="text" placeholder="Enter Username" name="username" id="username" required>
+
+                <button type="submit">Delete</button>
+            </div>
+    
+        </form>
+    </div>
+
+    <div class="container-button">
+        <a href="/dashboard/"><button>Back</button></a>
+    </div>
+</body>
+</html>

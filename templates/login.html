@@ -1,0 +1,54 @@
+<html lang="en">
+<head>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{.Title}}</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+    
+</head>
+<body>
+    <h1>Log in Form</h1>
+    <div class="container-button">
+        <form method="post">
+            <div class = "container">
+                <label for="username"> Username : </label>
+                <input type="text" placeholder="Enter Username" name="username" id="username" required>
+                <label for="password">Password : </label>
+                <input type="password" placeholder="Enter Password" name="password" id="password" required>
+                <button type="submit">Log in</button>
+
+            </div>
+        </form>
+
+    </div>
+    <div class="container-button">
+        <a href="/signup/"><button>Click here to Sign up</button></a>
+    </div>
+
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $("button").on("click", function()
+        {
+            // https://api.jquery.com/jquery.ajax/
+            $.ajax({
+                // HTTP method to use for the request
+                type: "POST",
+                // Data to be sent to the server
+                data: {
+                    "username": $("#username").val(),
+                    "password": $("#password").val(),
+                    "data-action": "logout",
+                },
+                // Called if the request succeeds
+                success: function(data, textStatus, jqXHR) {
+                    window.location.href = "/dashboard/";
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    alert('Error occurred!');
+                }
+            });
+            // e.preventDefault();
+        });
+    </script> -->
+</body>
+</html>

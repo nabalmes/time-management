@@ -1,0 +1,47 @@
+<html lang="en">
+<head>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Time Management</title>
+    <link rel="stylesheet" href="/static/css/dashboard.css">
+</head>
+<body>
+    <h1>Dashboard</h1>
+    <form method="POST">
+        <a href="/logout/">Log Out</a>
+    </form>
+    <form method="POST"><label for="username">Search Username:</label>
+    <input type="search" id="username" name="username">
+    <input type="submit">
+    </form>
+    <a href="/update/"><button>Update</button></a>
+    <a href="/delete/"><button>Delete</button></a>
+    <table>
+        <caption>Statement Summary</caption>
+        <thead>
+            <tr>
+                <th scope="col">Username</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Time In</th>
+                <th scope="col">Time Out</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{range .Users}}
+            <tr>
+                <td>{{.Username}}</td>
+                <td>{{.FirstName}}</td>
+                <td>{{.LastName}}</td>
+                <td>{{.TimeInString}}</td>
+                <td>{{.TimeOutString}}</td>
+            </tr>
+            {{end}}
+        </tbody>
+    </table>
+
+    <script src="script1.js"></script>
+    <script src="script2.js"></script>
+    
+</body>
+</html>
