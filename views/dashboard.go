@@ -11,16 +11,6 @@ import (
 	"gorm.io/gorm"
 )
 
-// type User struct {
-// 	ID        int
-// 	Username  string
-// 	Password  string
-// 	FirstName string
-// 	LastName  string
-// 	TimeIn    string
-// 	TimeOut   string
-// }
-
 func DashboardHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("./templates/dashboard.html"))
 	data := map[string]interface{}{}
